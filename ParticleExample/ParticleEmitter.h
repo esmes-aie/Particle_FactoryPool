@@ -27,6 +27,26 @@ class ParticleEmitter
 	color colLoEnd  , colHiEnd;
 	float lifespanLo, lifespanHi;
 
+	particle _generate()
+	{
+		particle part;
+		part.pos = pos;
+		part.sprite = sprite;
+
+		part.vel = randDir(angLo, angHi) * lerp(spdLo, spdHi, rand01());
+
+		part.lifespan = lerp(lifespanLo, lifespanHi, rand01());
+
+		part.sColor = lerp(colLoStart, colHiStart, rand01());
+		part.eColor = lerp(colLoEnd  , colHiEnd  , rand01());
+
+		part.sDim = randRange(dimLoStart, dimHiStart);
+		part.eDim = randRange(dimLoEnd  , dimHiEnd);
+
+		part.lifetime = 0;
+		return part;
+	}
+
 	void update(float dt)
 	{
 		for (int i = 0; i < PART_SIZE; ++i)
