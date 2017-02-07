@@ -12,7 +12,7 @@ struct particle
 
 	float lifetime, lifespan;
 
-	bool refesh(float dt)
+	bool refresh(float dt)
 	{
 		lifetime += dt;
 

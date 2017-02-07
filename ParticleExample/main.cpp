@@ -27,7 +27,7 @@ void main()
 	{
 		float dt = sfw::getDeltaTime();
 
-		if (!part.refesh(dt))
+		if (!part.refresh(dt))
 		{
 			part.pos  = vec2{ 400, 300 };
 			part.vel  = randDir(0, 360) * lerp(20, 80, rand01());
