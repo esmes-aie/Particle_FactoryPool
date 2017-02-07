@@ -30,5 +30,5 @@ struct particle
 		return alpha < 1;
 	}
 
-	bool isActive() const { lifetime < lifespan; }
+	bool isActive() const { return lifetime < lifespan; }
 };

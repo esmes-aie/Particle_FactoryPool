@@ -40,10 +40,13 @@ class ParticleEmitter
 		return part;
 	}
 
+	float emissionTimer;
+
 public:
 	// emissions
 	float emitRateLo, emitRateHi;
-	float emissionTimer;
+	
+	ParticleEmitter() : emissionTimer(0) { }
 
 	// defaults
 	vec2 pos;
@@ -64,11 +67,10 @@ public:
 				particles[i].refresh(dt);
 
 		emissionTimer -= dt;
-		if(emissionTimer < 0)
-			do
-			{
-				emit();
-			}
-			while(emissionTimer += lerp(emitRateLo, emitRateHi, rand01()) < 0);
+		while (emissionTimer < 0)
+		{
+			emit();
+			emissionTimer += lerp(emitRateLo, emitRateHi, rand01());
+		}			
 	}
 };
