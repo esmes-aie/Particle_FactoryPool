@@ -12,9 +12,8 @@ void main()
 
 	while (sfw::stepContext())
 	{
-		sfw::drawTexture(sprite, 400, 300, 100, 100);
+		sfw::drawTexture(sprite, 400, 300, 100, 100, 0, true,0, MAGENTA);
 	}
 
 	sfw::termContext();
-
 }
