@@ -18,8 +18,8 @@ void main()
 	part.sDim   = randRange(vec2{   8,  8 }, vec2{ 64, 64});
 	part.eDim   = lerp(vec2{ 256,256 }, vec2{512,512}, rand01());
 	
-	part.sColor.ui_color = WHITE;
-	part.sColor.ui_color = WHITE;
+	part.sColor.ui_color = RED;
+	part.eColor.ui_color = WHITE;
 	part.lifespan = 4.5f;
 	part.lifetime = 0;
 

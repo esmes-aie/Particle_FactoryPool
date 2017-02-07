@@ -19,7 +19,7 @@ struct particle
 		float alpha = lifetime / lifespan;
 
 		vec2  dim   = lerp(sDim,   eDim,   alpha);
-		color color = sColor; // (sColor, eColor, alpha);
+		color color = lerp(sColor, eColor, alpha);
 
 		pos = pos + vel * dt;
 
