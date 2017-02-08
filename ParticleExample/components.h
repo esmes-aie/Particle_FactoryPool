@@ -2,7 +2,6 @@
 
 #include "maths.h"
 #include "sfwdraw.h"
-#include "ObjectPool.h"
 
 struct transform
 {
