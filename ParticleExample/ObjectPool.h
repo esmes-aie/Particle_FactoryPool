@@ -52,7 +52,7 @@ public:
 		bool operator==(const iterator &O) const { return m_ref == O.m_ref && m_idx == O.m_idx; }
 		bool operator!=(const iterator &O) const { return !operator==(O); }
 
-		operator bool() const { m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
+		operator bool() const { return m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
 	};
 
 
@@ -85,11 +85,44 @@ public:
 		return iterator(this, idx);
 	}
 
+	iterator pop(iterator it)
+	{
+		if (!(it && it.m_ref == this)) return iterator();
 
+		size_t idx = it.m_idx;
+		++it;
 
-	iterator pop(const iterator &it);
-	// 3 things that a pool NEEDS to provide:
-		// iterator
-		// Popping or erasing function
-		// pushing or inserting function		
+		// if we are popping the closed head, we need to update the close list
+		// if we are popping left of the vacant head, we need to update the vacant head
+		// if there was a closed next pointing to this index, we have to update it.
+		m_data[idx].open = true;
+		
+		/////////////////////////////////////////
+		// For fixing the filled list pointers
+		if (idx == fillHead)
+			fillHead = m_data[idx].next;
+		else // there must be a closed index pointing to us.
+		{
+			size_t left = idx;
+			while (m_data[--left].open); // walk left until we hit the thing pointing at us!
+			m_data[left].next = m_data[idx].next; // tell it to point at what we were previously pointing to.
+		}
+
+		/////////////////////////////////////////
+		// For inserting the open space
+		if (idx < openHead)
+		{
+			m_data[idx].next = openHead;
+			openHead = idx;
+		}
+		else // IF there is a vacancy to our left
+		{
+			size_t left = idx;
+			while (!m_data[--left].open);
+
+			m_data[idx].next = m_data[left].next;
+			m_data[left].next = idx;
+		}
+		return it;
+	}
 };

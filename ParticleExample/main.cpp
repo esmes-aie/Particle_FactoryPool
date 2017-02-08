@@ -17,6 +17,8 @@ void main()
 
 	it->pos = vec2{ 12,12 };
 
+	pool.pop(it);
+
 	sfw::initContext();
 
 	unsigned sprite = 
