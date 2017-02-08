@@ -42,8 +42,30 @@ public:
 		        sprites(512), lifetimes(512), particles(512)
 	{ }
 
+	handle<Entity> begin() { return entities.begin(); }
+	handle<Entity> end() { return entities.end(); }
+
+
 	handle<Entity> destroy(handle<Entity> &eit) { eit->onFree(); return eit.free(); }
 
-	handle<Entity> begin() { return entities.begin(); }
-	handle<Entity> end()   { return entities.end(); }
+	// transform, sprite, O:lifetime
+	handle<Entity> spawnStaticImage(unsigned sprite_id, float x, float y, float w, float h, float time = -1)
+	{
+		handle<Entity> retval = entities.push();
+		
+		retval->tran = transforms.push();
+		retval->sprt = sprites.push();
+
+		retval->tran->position  = vec2{ x,y };
+		retval->tran->scale     = vec2{ w,h };		
+		retval->sprt->sprite_id = sprite_id;
+
+		if (time > 0)
+		{
+			retval->life = lifetimes.push();
+			retval->life->time = time;
+		}
+
+		return retval;
+	}
 };
