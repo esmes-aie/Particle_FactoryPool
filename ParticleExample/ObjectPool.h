@@ -37,6 +37,9 @@ public:
 		ObjectPool *m_ref;
 		size_t	    m_idx;
 	
+		friend class ObjectPool;
+
+		// ONLY the object pool can properly construct an iterator.
 		iterator(ObjectPool *a_ref, size_t a_idx) : m_ref(a_ref), m_idx(a_idx) {}
 	public:
 		iterator() : m_ref(nullptr), m_idx(0) { }
@@ -51,14 +54,9 @@ public:
 		iterator operator++(int) { auto that = *this;  operator++();  return  that; } // (postfix increment)
 
 		bool operator==(const iterator &O) const { return m_ref == O.m_ref && m_idx == O.m_idx; }
-		bool operator!=(const iterator &O) const { return !(*this == O); }
+		bool operator!=(const iterator &O) const { return !operator==(O); }
 
 		operator bool() const { m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
-		// dereferencing		*this
-		// pointer indirection   this->
-		// incrementation		 this++, ++this
-		// equivalence			 ==,!=
-		// boolean operator		
 	};
 
 
