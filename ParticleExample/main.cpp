@@ -7,9 +7,9 @@ void main()
 	
 	GameState gs;
 
+	gs.init();
+	gs.play();
 
-	gs.puff_sprite =
-		sfw::loadTextureMap("../res/particle_sprite.png");
 
 	while (sfw::stepContext())
 	{

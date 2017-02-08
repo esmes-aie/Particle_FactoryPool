@@ -9,10 +9,22 @@ class GameState
 public:
 	unsigned puff_sprite;
 
+	void init()
+	{
+		puff_sprite = sfw::loadTextureMap("../res/particle_sprite.png");
+	}
+
+	void play()
+	{
+		for(int i = 0; i < 200; ++i)
+		factory.spawnMouseAttractor(puff_sprite);
+	}
+
 	void update(float dt)
 	{
-		factory.spawnStaticImage(puff_sprite,
-		   rand() % 800, rand() % 600, rand() % 40 + 40, rand() % 40 + 40, 3.f);
+		sfw::drawCircle(sfw::getMouseX(), sfw::getMouseY(), 12);
+		//factory.spawnStaticImage(puff_sprite,
+		//   rand() % 800, rand() % 600, rand() % 40 + 40, rand() % 40 + 40, 3.f);
 
 		for (auto e = factory.begin(); e != factory.end();)
 		{
