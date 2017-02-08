@@ -1,5 +1,10 @@
 #pragma once
 
+// TODO ro5
+// destructor
+// address of operator
+
+
 #include "particle.h"
 
 class ObjectPool
@@ -17,6 +22,14 @@ class ObjectPool
 	size_t openHead, fillHead;
 
 public:
+	/* Rule of 5 */	
+	ObjectPool(const ObjectPool &)			  = delete;
+	ObjectPool &operator=(const ObjectPool &) = delete;
+	ObjectPool(ObjectPool &&)				  = delete;
+	ObjectPool &operator=(ObjectPool &&)	  = delete;
+
+	~ObjectPool() { delete[] m_data; }
+
 	ObjectPool(size_t a_size) : m_size(a_size), openHead(0), fillHead(m_size)
 	{
 		m_data = new __intern[m_size];

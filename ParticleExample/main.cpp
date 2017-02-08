@@ -9,6 +9,8 @@ void main()
 { 
 	sfw::initContext();
 
+	ObjectPool blah(4);
+
 
 	ObjectPool pool(20);
 
