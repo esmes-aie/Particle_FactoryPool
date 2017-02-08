@@ -1,43 +1,21 @@
 
 
-#include "Factory.h"
-
-
+#include "GameState.h"
 void main()
 {
 	sfw::initContext();
 	
-	Factory factory;
+	GameState gs;
 
-	unsigned sprite =
+
+	gs.puff_sprite =
 		sfw::loadTextureMap("../res/particle_sprite.png");
 
 	while (sfw::stepContext())
 	{
 		float dt = sfw::getDeltaTime();
 
-		factory.spawnStaticImage(sprite,
-				rand()%800,rand()%600,rand()%40+40, rand()%40+40, 3.f);
-
-		for(auto e = factory.begin(); e != factory.end();)
-		{
-			if (e->sprt)
-			{
-				e->sprt->draw(*e->tran);
-			}
-			
-			if (e->life)
-			{				
-				if (!(e->life->isAlive()))
-				{
-					factory.destroy(e);
-					continue;
-				}
-				e->life->age(dt);
-			}
-
-			++e;
-		}
+		gs.update(dt);
 	}
 
 	sfw::termContext();

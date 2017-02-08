@@ -50,7 +50,8 @@ public:
 	ObjectPool<Entity>::iterator destroy(ObjectPool<Entity>::iterator &eit) { eit->onFree(); return eit.free(); }
 
 	// transform, sprite, O:lifetime
-	ObjectPool<Entity>::iterator spawnStaticImage(unsigned sprite_id, float x, float y, float w, float h, float time = -1)
+	ObjectPool<Entity>::iterator spawnStaticImage(unsigned sprite_id, float x, float y,
+															 float w, float h, float time = -1)
 	{
 		ObjectPool<Entity>::iterator retval = entities.push();
 		if (!retval) return retval;
