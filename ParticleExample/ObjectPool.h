@@ -1,9 +1,6 @@
 #pragma once
 
-// TODO ro5
-// destructor
-// address of operator
-
+// template
 
 #include "particle.h"
 
@@ -55,9 +52,11 @@ public:
 
 		particle &operator* ()   { return  m_ref->m_data[m_idx].data; } // *this (Dereference operator)
 		particle *operator->()   { return &m_ref->m_data[m_idx].data; } // this->(Indirection operator)
+		particle *operator& ()   { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
 
 		const particle &operator* () const { return  m_ref->m_data[m_idx].data; } // (constant dereference)
 		const particle *operator->() const { return &m_ref->m_data[m_idx].data; } // (constant indirection)
+		const particle *operator& () const { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
 
 		iterator &operator++()   { m_idx = m_ref->m_data[m_idx].next; return *this; } // (prefix increment)
 		iterator operator++(int) { auto that = *this;  operator++();  return  that; } // (postfix increment)
@@ -66,6 +65,12 @@ public:
 		bool operator!=(const iterator &O) const { return !operator==(O); }
 
 		operator bool() const { return m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
+	
+		operator       particle*()       { return operator&(); }
+		operator const particle*() const { return operator&(); }
+		
+		// Address-of operator	
+		iterator &free() { return *this = m_ref->pop(*this); }
 	};
 
 

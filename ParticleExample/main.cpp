@@ -5,6 +5,11 @@
 
 #include "ObjectPool.h"
 
+void doSomething(const particle *)
+{
+
+}
+
 void main()
 { 
 	sfw::initContext();
@@ -12,7 +17,24 @@ void main()
 	ObjectPool blah(4);
 
 
+
 	ObjectPool pool(20);
+
+	while (pool.begin().free());
+
+	auto it = pool.push();
+
+	pool.pop(it);
+	it.free();
+
+	doSomething(it);
+
+
+	if ((bool)it == true)
+	{
+
+	}
+
 
 	for (int i = 0; i < 10; ++i)
 	{
