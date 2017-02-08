@@ -24,7 +24,7 @@ struct lifetime
 	float time = 0, lifespan;
 
 	void age(float dt) { time += dt; }
-	bool isAlive() const { time < lifespan; }
+	bool isAlive() const { return time < lifespan; }
 	float pctAlive() const { return time / lifespan; }
 };
 

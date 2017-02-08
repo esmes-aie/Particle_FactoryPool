@@ -1,16 +1,52 @@
-#include "sfwdraw.h"
-#include "maths.h"
-#include <iostream>
-#include "ParticleEmitter.h"
 
-#include "ObjectPool.h"
 
-void doSomething(const particle *)
-{
+#include "Factory.h"
 
-}
 
 void main()
+{
+	sfw::initContext();
+	
+	Factory factory;
+
+	unsigned sprite =
+		sfw::loadTextureMap("../res/particle_sprite.png");
+
+	while (sfw::stepContext())
+	{
+		float dt = sfw::getDeltaTime();
+
+		factory.spawnStaticImage(sprite,
+				rand()%800,rand()%600,rand()%40+40, rand()%40+40, 3.f);
+
+		for(auto e = factory.begin(); e != factory.end();)
+		{
+			if (e->sprt)
+			{
+				e->sprt->draw(*e->tran);
+			}
+			
+			if (e->life)
+			{				
+				if (!(e->life->isAlive()))
+				{
+					factory.destroy(e);
+					continue;
+				}
+				e->life->age(dt);
+			}
+
+			++e;
+		}
+	}
+
+	sfw::termContext();
+}
+
+
+
+/*
+void main2()
 { 
 	sfw::initContext();
 
@@ -51,3 +87,4 @@ void main()
 
 	sfw::termContext();
 }
+*/

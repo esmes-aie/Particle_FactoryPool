@@ -63,8 +63,8 @@ public:
 
 		operator bool() const { return m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
 	
-		operator       T*()       { return operator&(); }
-		operator const T*() const { return operator&(); }
+		//operator       T*()       { return operator&(); }
+		//operator const T*() const { return operator&(); }
 		
 		// Address-of operator	
 		iterator &free() { return *this = m_ref->pop(*this); }
