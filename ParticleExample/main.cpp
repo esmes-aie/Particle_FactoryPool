@@ -10,6 +10,12 @@ void main()
 
 	ObjectPool pool(20);
 
+	auto it = pool.push();
+	pool.push();
+	pool.push();
+	pool.push();
+
+	it->pos = vec2{ 12,12 };
 
 	sfw::initContext();
 

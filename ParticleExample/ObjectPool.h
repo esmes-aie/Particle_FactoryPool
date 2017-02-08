@@ -11,17 +11,13 @@ class ObjectPool
 		particle data; // the actual data we are storing	
 	};
 
-	__intern *m_data; // array of underlying raw data.
-
-	// three parallel arrays? Structure of Arrays (SoA)
-	//bool     *m_open;
-	//particle *m_data;
-	//size_t   *m_next;
-
+	__intern *m_data;
 	size_t    m_size;
 
+	size_t openHead, fillHead;
+
 public:
-	ObjectPool(size_t a_size) : m_size(a_size)
+	ObjectPool(size_t a_size) : m_size(a_size), openHead(0), fillHead(m_size)
 	{
 		m_data = new __intern[m_size];
 
@@ -60,8 +56,38 @@ public:
 	};
 
 
+	// push the value into the pool and generate an iterator.
+	iterator push(const particle &val = particle())
+	{
+		if (openHead >= m_size) return iterator();
+
+		size_t idx = openHead;
+
+		m_data[idx].data = val;
+		m_data[idx].open = false;
+		
+		openHead = m_data[openHead].next;
+
+		if (idx < fillHead) // if we get inserted before the head, become head
+		{
+			m_data[idx].next = fillHead;
+			fillHead = idx;
+		}
+		else // otherwise there MUST be something filled to our left
+		{
+			size_t left = idx;
+			// this will be closed when the loop stops.
+			while (m_data[--left].open);
+
+			m_data[idx].next = m_data[left].next;
+			m_data[left].next = idx;
+		}
+		return iterator(this, idx);
+	}
 
 
+
+	iterator pop(const iterator &it);
 	// 3 things that a pool NEEDS to provide:
 		// iterator
 		// Popping or erasing function
