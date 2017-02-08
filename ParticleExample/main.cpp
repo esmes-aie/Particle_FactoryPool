@@ -3,8 +3,14 @@
 #include <iostream>
 #include "ParticleEmitter.h"
 
+#include "ObjectPool.h"
+
 void main()
 { 
+
+	ObjectPool pool(20);
+
+
 	sfw::initContext();
 
 	unsigned sprite = 
@@ -12,28 +18,28 @@ void main()
 
 	ParticleEmitter pe;
 
-	pe.emitRateLo = 0.1f;
-	pe.emitRateHi = 0.3f;
+	pe.emitRateLo = 0.01f;
+	pe.emitRateHi = 0.03f;
 
 	pe.sprite = sprite;
 
-	pe.pos = vec2{400, 300};
-	pe.angLo = 0;
-	pe.angHi = 360;
-	pe.spdLo = 30;
-	pe.spdHi = 80;
+	pe.pos = vec2{400, -200};
+	pe.angLo = 45;
+	pe.angHi = 135;
+	pe.spdLo = 120;
+	pe.spdHi = 320;
 	pe.dimLoStart = vec2{ 8,8};
 	pe.dimHiStart = vec2{32,32};
 	pe.dimLoEnd   = vec2{256,256};
 	pe.dimHiEnd   = vec2{512,512};
 
-	pe.colLoStart.ui_color = GREEN;
-	pe.colHiStart.ui_color = BLUE;
-	pe.colLoEnd.ui_color   = YELLOW;
+	pe.colLoStart.ui_color = WHITE;
+	pe.colHiStart.ui_color = YELLOW;
+	pe.colLoEnd.ui_color   = NONE;
 	pe.colHiEnd.ui_color   = RED;
 
-	pe.lifespanLo = .3f;
-	pe.lifespanHi = .5f;
+	pe.lifespanLo = 3.5f;
+	pe.lifespanHi = 5.7f;
 
 	while (sfw::stepContext())
 	{

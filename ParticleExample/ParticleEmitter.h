@@ -2,7 +2,7 @@
 
 #include "particle.h"
 
-#define PART_SIZE 24
+#define PART_SIZE 10000
 
 // Factory
 class ParticleEmitter
