@@ -1,6 +1,7 @@
 #pragma once
 
 #include "particle.h"
+#include "ObjectPool.h"
 
 #define PART_SIZE 10000
 
@@ -8,18 +9,22 @@
 class ParticleEmitter
 {
 	// Data Structure to store all of our particles
-	particle particles[PART_SIZE];
+	//particle particles[PART_SIZE];
+	ObjectPool particles;
 
+	// Object Pooling Method
 	void emit()
 	{
-		for(int i = 0; i < PART_SIZE; ++i) // linear time every time we add a particle
-			if (!particles[i].isActive())
-			{
-				particles[i] = _generate();
-				return;
-			}
+		//for(int i = 0; i < PART_SIZE; ++i) // linear time every time we add a particle
+		//	if (!particles[i].isActive())
+		//	{
+		//		particles[i] = _generate();
+		//		return;
+		//	}
+		particles.push(_generate());
 	}
 
+	// Factory Method
 	particle _generate()
 	{
 		particle part;
@@ -46,7 +51,7 @@ public:
 	// emissions
 	float emitRateLo, emitRateHi;
 	
-	ParticleEmitter() : emissionTimer(0) { }
+	ParticleEmitter() : emissionTimer(0), particles(PART_SIZE) { }
 
 	// defaults
 	vec2 pos;
@@ -62,9 +67,17 @@ public:
 
 	void update(float dt)
 	{
-		for (int i = 0; i < PART_SIZE; ++i)
-			if(particles[i].isActive())
-				particles[i].refresh(dt);
+		//for (int i = 0; i < PART_SIZE; ++i)
+		//	if(particles[i].isActive())
+		//		particles[i].refresh(dt);
+
+		for (auto it = particles.begin(); it != particles.end(); )
+		{
+			it->refresh(dt);
+
+			if (it->isActive()) ++it;
+			else				it.free(); // similar to ++
+		}
 
 		emissionTimer -= dt;
 		while (emissionTimer < 0)

@@ -14,42 +14,6 @@ void main()
 { 
 	sfw::initContext();
 
-	ObjectPool blah(4);
-
-
-
-	ObjectPool pool(20);
-
-	while (pool.begin().free());
-
-	auto it = pool.push();
-
-	pool.pop(it);
-	it.free();
-
-	doSomething(it);
-
-
-	if ((bool)it == true)
-	{
-
-	}
-
-
-	for (int i = 0; i < 10; ++i)
-	{
-		pool.push();
-	}
-
-	for each(auto part in pool)
-	{
-		part.isActive();
-	}
-
-
-
-	
-
 	unsigned sprite = 
 	sfw::loadTextureMap("../res/particle_sprite.png");
 
