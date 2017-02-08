@@ -7,19 +7,24 @@
 
 void main()
 { 
+	sfw::initContext();
+
 
 	ObjectPool pool(20);
 
-	auto it = pool.push();
-	pool.push();
-	pool.push();
-	pool.push();
+	for (int i = 0; i < 10; ++i)
+	{
+		pool.push();
+	}
 
-	it->pos = vec2{ 12,12 };
+	for each(auto part in pool)
+	{
+		part.isActive();
+	}
 
-	pool.pop(it);
 
-	sfw::initContext();
+
+	
 
 	unsigned sprite = 
 	sfw::loadTextureMap("../res/particle_sprite.png");

@@ -125,4 +125,10 @@ public:
 		}
 		return it;
 	}
+
+	// for each
+	iterator begin()  { return iterator(this, fillHead); }
+	iterator end()	  { return iterator(this, m_size);   }
+
+	// for(auto it = begin(); it != end(); ++it);
 };
