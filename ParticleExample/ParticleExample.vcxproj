@@ -121,6 +121,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleEmitter.h" />

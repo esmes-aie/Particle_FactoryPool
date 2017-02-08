@@ -15,8 +15,19 @@ struct vec2 { float x, y; };
 inline vec2 operator+(const vec2 &A, const vec2 &B)
 						{ return vec2{A.x+B.x, A.y+B.y}; }
 
+inline vec2 operator-(const vec2 &A, const vec2 &B)
+{
+	return vec2{ A.x - B.x, A.y - B.y };
+}
+
 inline vec2 operator*(const vec2 &A, float b)
 						{ return vec2{A.x*b, A.y*b}; }
+
+inline vec2 normal(const vec2 &A)
+{
+	float D = sqrt(A.x*A.x + A.y*A.y);
+	return vec2{A.x/D, A.y/D};
+}
 
 inline vec2 lerp(const vec2 &S, const vec2 &E, float t)
 						{ return S*(1 - t) + E*t; }
