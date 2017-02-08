@@ -1,16 +1,13 @@
 #pragma once
 
-// template
-
-#include "particle.h"
-
+template<typename T>
 class ObjectPool
 {
 	struct __intern // interleaved type, Array of Structures (AoS)
 	{
 		bool     open; // if this index is open
 		size_t   next; // next index in this list
-		particle data; // the actual data we are storing	
+		T		 data; // the actual data we are storing	
 	};
 
 	__intern *m_data;
@@ -50,13 +47,13 @@ public:
 	public:
 		iterator() : m_ref(nullptr), m_idx(0) { }
 
-		particle &operator* ()   { return  m_ref->m_data[m_idx].data; } // *this (Dereference operator)
-		particle *operator->()   { return &m_ref->m_data[m_idx].data; } // this->(Indirection operator)
-		particle *operator& ()   { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
+		T &operator* ()   { return  m_ref->m_data[m_idx].data; } // *this (Dereference operator)
+		T *operator->()   { return &m_ref->m_data[m_idx].data; } // this->(Indirection operator)
+		T *operator& ()   { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
 
-		const particle &operator* () const { return  m_ref->m_data[m_idx].data; } // (constant dereference)
-		const particle *operator->() const { return &m_ref->m_data[m_idx].data; } // (constant indirection)
-		const particle *operator& () const { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
+		const T &operator* () const { return  m_ref->m_data[m_idx].data; } // (constant dereference)
+		const T *operator->() const { return &m_ref->m_data[m_idx].data; } // (constant indirection)
+		const T *operator& () const { return &m_ref->m_data[m_idx].data; } // &this reference-of operator
 
 		iterator &operator++()   { m_idx = m_ref->m_data[m_idx].next; return *this; } // (prefix increment)
 		iterator operator++(int) { auto that = *this;  operator++();  return  that; } // (postfix increment)
@@ -66,8 +63,8 @@ public:
 
 		operator bool() const { return m_ref != nullptr && m_idx < m_ref->m_size && !m_ref->m_data[m_idx].open; }
 	
-		operator       particle*()       { return operator&(); }
-		operator const particle*() const { return operator&(); }
+		operator       T*()       { return operator&(); }
+		operator const T*() const { return operator&(); }
 		
 		// Address-of operator	
 		iterator &free() { return *this = m_ref->pop(*this); }
@@ -75,7 +72,7 @@ public:
 
 
 	// push the value into the pool and generate an iterator.
-	iterator push(const particle &val = particle())
+	iterator push(const T &val = T())
 	{
 		if (openHead >= m_size) return iterator();
 

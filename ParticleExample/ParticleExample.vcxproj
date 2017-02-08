@@ -125,6 +125,7 @@
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="components.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

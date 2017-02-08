@@ -10,7 +10,7 @@ class ParticleEmitter
 {
 	// Data Structure to store all of our particles
 	//particle particles[PART_SIZE];
-	ObjectPool particles;
+	ObjectPool<particle> particles;
 
 	// Object Pooling Method
 	void emit()
